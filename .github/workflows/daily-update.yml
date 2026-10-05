@@ -1,0 +1,32 @@
+name: Update repository
+
+on:
+  schedule:
+    - cron: "41 13 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Update files
+        run: |
+          DATE=$(date +"%Y-%m-%d")
+          for f in license.md security.md contributing.md; do
+            [ -f "$f" ] && sed -i -E "s/20[0-9]{2}-[0-9]{2}-[0-9]{2}/${DATE}/g" "$f"
+          done
+
+      - name: Commit and push
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+          git add -A
+          git diff --staged --quiet && echo "Nothing to update" && exit 0
+          git commit -m "Update files"
+          git push
