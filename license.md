@@ -134,4 +134,4 @@ Der grüne Button im Schnellstart.
 
 ---
 
-*Aktualisiert 2026-10-09 · Unter der MIT-Lizenz geteilt*
+*Aktualisiert 2026-10-10 · Unter der MIT-Lizenz geteilt*
